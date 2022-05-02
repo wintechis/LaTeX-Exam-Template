@@ -1,0 +1,594 @@
+
+\documentclass[12pt, a4paper, oneside]{scrartcl}
+
+%
+
+
+\usepackage{tikz}
+
+\usepackage{titleref}
+\usepackage[german]{quotmark}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{array}
+\usepackage{version}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{txfonts}
+\usepackage{multirow}
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{scrlayer-scrpage}
+\usepackage{ifthen}
+\usepackage{lastpage}
+\usepackage{calc}
+\usepackage{refcount}
+%\usepackage{hyperref}
+\usepackage{url}
+\usepackage{ dsfont }
+\usepackage{nicefrac}
+\usepackage{csquotes}
+\usepackage{multicol}
+\usepackage{enumerate}
+\usepackage{setspace}
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+
+\usepackage{color}
+\usepackage{ulem}
+\usepackage[all]{xy}
+
+\usepackage{todonotes}
+
+%%% CF - added for star rating
+\usepackage{xcolor}
+\usepackage{scalerel}
+\usepackage{stackengine}
+\usepackage{pgf}
+%%% end - cf
+
+
+
+%\usepackage[vscale=0.8,hscale=0.8]{geometry}
+
+
+\usepackage{booktabs}
+\usepackage{fancyvrb}
+\usepackage{pgf-umlsd}
+
+
+\newboolean{mitloesung}
+\newboolean{mitbewertung}
+\newboolean{mitlernzielen}
+\newboolean{punkteZaehlen}
+\newboolean{bonusklausur}
+\newboolean{mitInhaltsverzeichnis}
+\newboolean{erreichtePunkteKastenDrucken}
+\newboolean{teilaufgabenVerwenden}
+\newboolean{teilaufgabenPunkteKastenDrucken}
+\newboolean{klausurSpracheDeutsch}
+%\newboolean{texVersionOld}
+
+\setboolean{teilaufgabenVerwenden}{true} %% Ob beim Punktezählen die teilaufgabe-Umgebung aktiviert wird.
+
+
+
+%% Hier Details zur Prüfung angeben %%%%%%%%%%%%%%%
+ \setboolean{klausurSpracheDeutsch}{false}        %% Deutsch oder englisch?
+ \setboolean{mitloesung}{false}                  %% Ob die Musterlösung ausgegeben werden soll
+ \setboolean{mitbewertung}{true}                 %% Ob die Bewertung ausgegeben werden soll (nur mit Lösung)
+  \setboolean{mitlernzielen}{true}                 %% Ob die Lernziele ausgegeben werden soll (nur mit Lösung)
+ \setboolean{bonusklausur}{false}                %% Ob die Klausur eine Bonusklausur ist (zählt keine Punkte, ...)
+ \setboolean{mitInhaltsverzeichnis}{false}        %% Ob ein Inhaltsverzeichnis der Aufgaben erscheinen soll
+ \setboolean{erreichtePunkteKastenDrucken}{true} %% Zu Aufgabenbeginn Kasten für Punktesumme drucken.
+ \setboolean{teilaufgabenPunkteKastenDrucken}{true} %% Zu Teilaufgabenbeginn Kasten für Punktesumme drucken.
+ \def\klausurname{Foundations of Linked Data}  %% Der Name der Prüfung
+ \def\klausurdatum{17.02.2022}             %% Das Datum, an dem die Prüfung stattfindet
+ \def\klausursemester{Winter 2021/22}              %% Das Semester, in dem die Prüfung stattfindet
+ \def\klausurminuten{60}                         %% Dauer der Klausur
+ \def\klausurhilfsmittel{-}                  %% Zugelassene Hilfsmittel
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Ob die Punkte automatisch gezählt werden sollen (empfohlen).
+\setboolean{punkteZaehlen}{true}                   %% Wenn ausgeschaltet, muss die Summe der Punkte der
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Teilaufgaben als letzter Parameter an die aufgabe-Umgebung übergeben werden.
+%\setboolean{texVersionOld}{true}                   %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\ifthenelse{\boolean{texVersionOld}}
+%{
+%}
+%{
+%\makeatletter % Wegen Fehler in refcount-Package: http://newsgroups.derkeiler.com/Archive/Comp/comp.text.tex/2011-08/msg00326.html
+%\let\rc@refused\refused
+%}
+
+% Fehler bei doppelter Punktezählung.
+\newcommand{\punkteFehler}{\begin{color}{red}ACHTUNG: Teilaufgabe-Umgebung, trotz Punkten in Aufgabe-Umgebung! (Aufgabe-Parameter => 0.) \end{color}}
+
+% TODO: Punktekästen in Lösung ausblenden???
+\ifthenelse{\boolean{mitloesung}}
+{
+%\setboolean{erreichtePunkteKastenDrucken}{false}
+%\setboolean{teilaufgabenPunkteKastenDrucken}{false}
+}
+{}
+
+\makeatletter
+
+% Datei zum Schreiben oeffnen:
+\newwrite\ex@file
+\immediate\openout\ex@file=\jobname.sol
+
+% Wird bei \begin{solution} ausgefuehrt:
+\newcommand*{\solution}{\@bsphack
+\let\do\@makeother\dospecials
+\catcode`\^^M\active
+\def\verbatim@processline{%
+\immediate\write\ex@file{\the\verbatim@line}}%
+\immediate\write\ex@file{%
+\string\begin{ex@solution}{\theexercise}}%
+\verbatim@start}
+
+% Wird bei \end{solution} ausgefuehrt:
+\def\endsolution{%
+\immediate\write\ex@file{%
+\string\end{ex@solution}}\@esphack}
+
+\makeatother
+
+
+%\pdfminorversion=6
+
+%% BONUSKLAUSUR
+\ifthenelse{\boolean{bonusklausur}}
+  {\setboolean{punkteZaehlen}{false}}
+	{}
+
+\ifthenelse{\boolean{punkteZaehlen}}
+  {}
+	{\setboolean{teilaufgabenVerwenden}{false}}
+
+\pagenumbering{arabic}
+\setlength{\parindent}{0cm}
+
+\newcommand{\zusatztext}{}
+\renewcommand{\labelenumi}{(\alph{enumi})}
+\renewcommand{\labelenumii}{(\arabic{enumii})}
+
+\newcounter{nAufgabe}
+\setcounter{nAufgabe}{0}
+
+\newcounter{aufgabe1punkte}\setcounter{aufgabe1punkte}{0}
+\newcounter{aufgabe2punkte}\setcounter{aufgabe2punkte}{0}
+\newcounter{aufgabe3punkte}\setcounter{aufgabe3punkte}{0}
+\newcounter{aufgabe4punkte}\setcounter{aufgabe4punkte}{0}
+\newcounter{aufgabe5punkte}\setcounter{aufgabe5punkte}{0}
+\newcounter{aufgabe6punkte}\setcounter{aufgabe6punkte}{0}
+\newcounter{aufgabe7punkte}\setcounter{aufgabe7punkte}{0}
+\newcounter{aufgabe8punkte}\setcounter{aufgabe8punkte}{0}
+\newcounter{aufgabe9punkte}\setcounter{aufgabe9punkte}{0}
+\newcounter{aufgabe10punkte}\setcounter{aufgabe10punkte}{0}
+\newcounter{aufgabe11punkte}\setcounter{aufgabe11punkte}{0}
+\newcounter{aufgabe12punkte}\setcounter{aufgabe12punkte}{0}
+\newcounter{aufgabe13punkte}\setcounter{aufgabe13punkte}{0}
+\newcounter{aufgabe14punkte}\setcounter{aufgabe14punkte}{0}
+\newcounter{aufgabe15punkte}\setcounter{aufgabe15punkte}{0}
+\newcounter{aufgabe16punkte}\setcounter{aufgabe16punkte}{0}
+\newcounter{sumNumText}
+\newcounter{zwischSum}
+
+\newboolean{isOldschoolPoints}\setboolean{isOldschoolPoints}{false}
+
+\newcounter{sumhelp}
+\newcounter{sumGesamt}
+\setcounter{sumGesamt}{0}
+\newcommand{\sumText}{}
+
+%% TEILAUFGABE-Umgebung
+\ifthenelse{\boolean{teilaufgabenVerwenden}}
+  {
+  \newenvironment{teilaufgabe}[1]
+  	{
+  		% Teilaufgabe-Umgebung aufgerufen, obwohl Punkte an Aufgabe-Umgebung übergeben wurden.
+		\ifthenelse{\boolean{isOldschoolPoints}}
+		{\punkteFehler}
+		{} 
+  	
+  		\setcounter{sumGesamt}{\thesumGesamt+#1}
+		\setcounter{zwischSum}{#1}
+		
+		\ifnum\thenAufgabe=1
+			\addtocounter{aufgabe1punkte}{#1}
+		\fi
+		\ifnum\thenAufgabe=2
+			\addtocounter{aufgabe2punkte}{#1}
+		\fi
+		\ifnum\thenAufgabe=3
+			\addtocounter{aufgabe3punkte}{#1}
+		\fi
+		\ifnum\thenAufgabe=4
+			\addtocounter{aufgabe4punkte}{#1}
+		\fi
+		\ifnum\thenAufgabe=5
+			\addtocounter{aufgabe5punkte}{#1}
+		\fi
+		\ifnum\thenAufgabe=6
+			\addtocounter{aufgabe6punkte}{#1}
+		\fi
+		\ifnum\thenAufgabe=7
+			\addtocounter{aufgabe7punkte}{#1}
+		\fi
+		\ifnum\thenAufgabe=8
+			\addtocounter{aufgabe8punkte}{#1}
+		\fi
+		\ifnum\thenAufgabe=9
+			\addtocounter{aufgabe9punkte}{#1}
+		\fi
+		\ifnum\thenAufgabe=10
+			\addtocounter{aufgabe10punkte}{#1}
+		\fi
+		\ifnum\thenAufgabe=11
+			\addtocounter{aufgabe11punkte}{#1}
+		\fi
+		\ifnum\thenAufgabe=12
+			\addtocounter{aufgabe12punkte}{#1}
+		\fi
+		\ifnum\thenAufgabe=13
+			\addtocounter{aufgabe13punkte}{#1}
+		\fi
+		\ifnum\thenAufgabe=14
+			\addtocounter{aufgabe14punkte}{#1}
+		\fi
+		\ifnum\thenAufgabe=15
+			\addtocounter{aufgabe15punkte}{#1}
+		\fi
+		\ifnum\thenAufgabe=16
+			\addtocounter{aufgabe16punkte}{#1}
+		\fi
+	}
+	{
+  	\ifthenelse{\boolean{teilaufgabenPunkteKastenDrucken}}
+  	{
+%  	\sumText
+		\begin{flushright}
+		\vspace{-0.7cm}
+		\large
+		\fbox{~~~~~~ / \thezwischSum}
+		\vspace{-0.3cm}
+		\end{flushright}
+	}
+	{}
+	}
+  }
+  {}
+
+%% AUFGABE-Umgebung
+\newenvironment{aufgabe}[9][]
+{
+
+\ifthenelse{\boolean{punkteZaehlen}}
+  {
+	\ifthenelse{#2=0 \and #3=0 \and #4=0 \and #5=0 \and #6=0 \and #7=0 \and #8=0 \and #9=0}
+	{}
+	{\setboolean{isOldschoolPoints}{true}} % Es wurden Punkte der Aufgabe-Umgebung übergeben.
+  	
+	\setcounter{sumhelp}{#2+#3+#4+#5+#6+#7+#8+#9}
+	}
+	{\setcounter{sumhelp}{0}}
+	
+\ifnum#2>0
+	\renewcommand{\sumText}{}
+	\ifnum#3>0
+		\renewcommand{\sumText}{#2+#3=}
+		\ifnum#4>0
+			\renewcommand{\sumText}{#2+#3+#4=}
+			\ifnum#5>0
+				\renewcommand{\sumText}{#2+#3+#4+#5=}
+				\ifnum#6>0
+					\renewcommand{\sumText}{#2+#3+#4+#5+#6=}
+					\ifnum#7>0
+						\renewcommand{\sumText}{#2+#3+#4+#5+#6+#7=}
+						\ifnum#8>0
+							\renewcommand{\sumText}{#2+#3+#4+#5+#6+#7+#8=}
+							\ifnum#9>0
+								\renewcommand{\sumText}{#2+#3+#4+#5+#6+#7+#8+#9=}
+%								\ifnum#9>0
+%									\renewcommand{\sumText}{#1+#2+#3+#4+#5+#6+#7+#8+#9=}
+\fi\fi\fi\fi\fi\fi\fi\fi
+
+
+% Inhaltsverzeichnis
+% Unterscheidung zwischen Bonus und nicht Bonus bei Inhaltsverzeichnis:
+\ifthenelse{\boolean{bonusklausur}}
+{
+\ifnum\thesumhelp>1
+{\addcontentsline{toc}{subsection}{#1}}
+\else
+{
+\ifnum\thesumhelp=0
+{\addcontentsline{toc}{subsection}{#1}}
+\else
+{\addcontentsline{toc}{subsection}{#1}}
+\fi
+}
+\fi
+}
+{
+%\ifthenelse{\boolean{boolvar}}{}{}
+% Unterscheidung zwischen "mit Teilaufgabenzählung" und "ohne".
+\ifthenelse{\boolean{teilaufgabenVerwenden}}
+{ % Zu beachten: Der Counter nAufgabe wird erst später inkrementiert.
+\ifnum\thenAufgabe=0 {\addcontentsline{toc}{subsection}{#1 \textbf{(\ref{Punkte1} Points)}}} \fi
+\ifnum\thenAufgabe=1 {\addcontentsline{toc}{subsection}{#1 \textbf{(\ref{Punkte2} Points)}}} \fi
+\ifnum\thenAufgabe=2 {\addcontentsline{toc}{subsection}{#1 \textbf{(\ref{Punkte3} Points)}}} \fi
+\ifnum\thenAufgabe=3 {\addcontentsline{toc}{subsection}{#1 \textbf{(\ref{Punkte4} Points)}}} \fi
+\ifnum\thenAufgabe=4 {\addcontentsline{toc}{subsection}{#1 \textbf{(\ref{Punkte5} Points)}}} \fi
+\ifnum\thenAufgabe=5 {\addcontentsline{toc}{subsection}{#1 \textbf{(\ref{Punkte6} Points)}}} \fi
+\ifnum\thenAufgabe=6 {\addcontentsline{toc}{subsection}{#1 \textbf{(\ref{Punkte7} Points)}}} \fi
+\ifnum\thenAufgabe=7 {\addcontentsline{toc}{subsection}{#1 \textbf{(\ref{Punkte8} Points)}}} \fi
+\ifnum\thenAufgabe=8 {\addcontentsline{toc}{subsection}{#1 \textbf{(\ref{Punkte9} Points)}}} \fi
+\ifnum\thenAufgabe=9 {\addcontentsline{toc}{subsection}{#1 \textbf{(\ref{Punkte10} Points)}}} \fi
+\ifnum\thenAufgabe=10 {\addcontentsline{toc}{subsection}{#1 \textbf{(\ref{Punkte11} Points)}}} \fi
+\ifnum\thenAufgabe=11 {\addcontentsline{toc}{subsection}{#1 \textbf{(\ref{Punkte12} Points)}}} \fi
+\ifnum\thenAufgabe=12 {\addcontentsline{toc}{subsection}{#1 \textbf{(\ref{Punkte13} Points)}}} \fi
+\ifnum\thenAufgabe=13 {\addcontentsline{toc}{subsection}{#1 \textbf{(\ref{Punkte14} Points)}}} \fi
+\ifnum\thenAufgabe=14 {\addcontentsline{toc}{subsection}{#1 \textbf{(\ref{Punkte15} Points)}}} \fi
+\ifnum\thenAufgabe=15 {\addcontentsline{toc}{subsection}{#1 \textbf{(\ref{Punkte16} Points)}}} \fi
+}
+{
+\ifnum\thesumhelp>1
+{\addcontentsline{toc}{subsection}{#1 \textbf{(\thesumhelp\ Points)}}}
+\else
+{
+\ifnum\thesumhelp=0
+{\addcontentsline{toc}{subsection}{#1 \textbf{(\thesumhelp\ Points)}}}
+\else
+{\addcontentsline{toc}{subsection}{#1 \textbf{(\thesumhelp\ Point)}}}
+\fi
+}
+\fi
+}
+}
+%\ifthenelse{\boolean{teilaufgabenVerwenden}}
+%{}
+%{
+\setcounter{sumGesamt}{\thesumGesamt+\thesumhelp}
+%}
+\renewcommand{\zusatztext}{#1}
+\textbf{\sffamily Question \refstepcounter{nAufgabe}\arabic{nAufgabe}. } \zusatztext\ 
+\ifthenelse{\boolean{punkteZaehlen}}
+{
+\ifthenelse{\value{nAufgabe}=1}{\newcommand{\sumNumText}{\ref{Punkte1}}}{}
+\ifthenelse{\value{nAufgabe}=2}{\newcommand{\sumNumText}{\ref{Punkte2}}}{}
+\ifthenelse{\value{nAufgabe}=3}{\newcommand{\sumNumText}{\ref{Punkte3}}}{}
+\ifthenelse{\value{nAufgabe}=4}{\newcommand{\sumNumText}{\ref{Punkte4}}}{}
+\ifthenelse{\value{nAufgabe}=5}{\newcommand{\sumNumText}{\ref{Punkte5}}}{}
+\ifthenelse{\value{nAufgabe}=6}{\newcommand{\sumNumText}{\ref{Punkte6}}}{}
+\ifthenelse{\value{nAufgabe}=7}{\newcommand{\sumNumText}{\ref{Punkte7}}}{}
+\ifthenelse{\value{nAufgabe}=8}{\newcommand{\sumNumText}{\ref{Punkte8}}}{}
+\ifthenelse{\value{nAufgabe}=9}{\newcommand{\sumNumText}{\ref{Punkte9}}}{}
+\ifthenelse{\value{nAufgabe}=10}{\newcommand{\sumNumText}{\ref{Punkte10}}}{}
+\ifthenelse{\value{nAufgabe}=11}{\newcommand{\sumNumText}{\ref{Punkte11}}}{}
+\ifthenelse{\value{nAufgabe}=12}{\newcommand{\sumNumText}{\ref{Punkte12}}}{}
+\ifthenelse{\value{nAufgabe}=13}{\newcommand{\sumNumText}{\ref{Punkte13}}}{}
+\ifthenelse{\value{nAufgabe}=14}{\newcommand{\sumNumText}{\ref{Punkte14}}}{}
+\ifthenelse{\value{nAufgabe}=15}{\newcommand{\sumNumText}{\ref{Punkte15}}}{}
+\ifthenelse{\value{nAufgabe}=16}{\newcommand{\sumNumText}{\ref{Punkte16}}}{}
+%\ifnum\thenAufgabe=16 {\renewcommand{sumNumText}{\ref{Punkte16}}} \fi
+\hfill($\sumText \sumNumText$ Points)\\
+
+%\ifthenelse{\thesumNumText=0 \and #2>0}{\sumText}{}
+
+\ifthenelse{\boolean{erreichtePunkteKastenDrucken}}{
+\begin{flushright}
+\vspace{-0.7cm}
+\Large
+\fbox{~~~~~~ / \sumNumText}
+\vspace{-0.3cm}
+\end{flushright}
+}{}
+\ifnum\thenAufgabe=1
+\setcounter{aufgabe1punkte}{\thesumhelp}
+\fi
+\ifnum\thenAufgabe=2
+\setcounter{aufgabe2punkte}{\thesumhelp}
+\fi
+\ifnum\thenAufgabe=3
+\setcounter{aufgabe3punkte}{\thesumhelp}
+\fi
+\ifnum\thenAufgabe=4
+\setcounter{aufgabe4punkte}{\thesumhelp}
+\fi
+\ifnum\thenAufgabe=5
+\setcounter{aufgabe5punkte}{\thesumhelp}
+\fi
+\ifnum\thenAufgabe=6
+\setcounter{aufgabe6punkte}{\thesumhelp}
+\fi
+\ifnum\thenAufgabe=7
+\setcounter{aufgabe7punkte}{\thesumhelp}
+\fi
+\ifnum\thenAufgabe=8
+\setcounter{aufgabe8punkte}{\thesumhelp}
+\fi
+\ifnum\thenAufgabe=9
+\setcounter{aufgabe9punkte}{\thesumhelp}
+\fi
+\ifnum\thenAufgabe=10
+\setcounter{aufgabe10punkte}{\thesumhelp}
+\fi
+\ifnum\thenAufgabe=11
+\setcounter{aufgabe11punkte}{\thesumhelp}
+\fi
+\ifnum\thenAufgabe=12
+\setcounter{aufgabe12punkte}{\thesumhelp}
+\fi
+\ifnum\thenAufgabe=13
+\setcounter{aufgabe13punkte}{\thesumhelp}
+\fi
+\ifnum\thenAufgabe=14
+\setcounter{aufgabe14punkte}{\thesumhelp}
+\fi
+\ifnum\thenAufgabe=15
+\setcounter{aufgabe15punkte}{\thesumhelp}
+\fi
+\ifnum\thenAufgabe=16
+\setcounter{aufgabe16punkte}{\thesumhelp}
+\fi
+}
+{
+\ifthenelse{\boolean{bonusklausur}}{}{\hfill($\sumText #9$ Punkte)}\\
+}
+
+}
+{\setboolean{isOldschoolPoints}{false}}
+
+\newcommand{\sichermich}[2]{
+ \begingroup
+ \expandafter\def\csname the#1\endcsname{\number\csname c@#1\endcsname}%
+ \addtocounter{#1}{-1}\refstepcounter{#1}\label{#2}%
+ \endgroup}
+
+\newcommand{\B}{\mathbb{B}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+
+\pagestyle{scrheadings}
+
+\ihead{\klausurname\ -- \ifthenelse{\boolean{bonusklausur}}{\ifthenelse{\boolean{klausurSpracheDeutsch}}{Bonuspr.}{Bonus exam}}{\ifthenelse{\boolean{klausurSpracheDeutsch}}{Prüfung}{Exam}} \klausurdatum\ -- \klausursemester\ -- 
+\ifthenelse{\boolean{mitloesung}}
+{\ref{maxAufgaben} Aufg./\pageref{LastPage} Seiten}
+{\ifthenelse{\boolean{klausurSpracheDeutsch}}{Mat.Nr.:}{Mat.No.:}}}
+\chead{~}
+\ohead{\pagemark}
+\cfoot{~}
+\setheadsepline{.4pt}
+
+\ifthenelse{\boolean{mitloesung}}
+  {
+  \includeversion{loesung}
+  \excludeversion{nichtloesung}}
+  {
+  \includeversion{nichtloesung}
+  \excludeversion{loesung}}
+
+\ifthenelse{\boolean{mitbewertung}}
+  {
+	\ifthenelse{\boolean{mitloesung}}
+		{\includeversion{bewertung}}
+		{\excludeversion{bewertung}}}
+  {\excludeversion{bewertung}}
+
+\ifthenelse{\boolean{mitlernzielen}}
+  {
+	\ifthenelse{\boolean{mitloesung}}
+		{\includeversion{lernziel}}
+		{\excludeversion{lernziel}}}
+  {\excludeversion{lernziel}}
+
+\begin{document}
+
+\hyphenation{Transistor-ebene}
+
+\begin{loesung}
+\newcounter{gesPunkteNum}
+\setcounterref{gesPunkteNum}{Gesamtpunkte}
+~
+	\vspace{5cm}
+	\begin{center}
+		\Large
+		Lösung
+		
+		\bigbreak
+		(\thegesPunkteNum\ Points)
+		
+		\normalsize
+	\end{center}
+	\newpage
+\end{loesung}
+
+\begin{nichtloesung}
+	\input{deckblatt.tex}
+\end{nichtloesung}
+
+\ifthenelse{\boolean{mitInhaltsverzeichnis}}
+{
+\renewcommand{\contentsname}{Aufgabenübersicht}
+\large
+\tableofcontents
+\normalsize
+\thispagestyle{empty}
+}
+{}
+
+\begin{nichtloesung}
+ \setcounter{page}{0}
+\end{nichtloesung}
+
+
+%%%%%
+%% CF - star ratings: Example \Stars{5} or \Stars{4.2}
+%%%%%
+
+\newcounter{iloop}
+\newcommand\openbigstar[1][0.7]{%
+  \scalerel*{%
+    \stackinset{c}{-.125pt}{c}{}{\scalebox{#1}{\color{white}{$\bigstar$}}}{%
+      $\bigstar$}%
+  }{\bigstar}
+}
+\newcommand{\Stars}[1]{\ensuremath{%
+\pgfmathtruncatemacro{\imax}{ifthenelse(int(#1)==#1,#1-1,#1)}%
+\pgfmathsetmacro{\xrest}{0.9*(1-#1+\imax)}%
+\setcounter{iloop}{0}%
+\loop\stepcounter{iloop}\ifnum\value{iloop}<\the\numexpr\imax+1
+\bigstar\repeat
+\openbigstar[\xrest]%
+\setcounter{iloop}{0}%
+\loop\stepcounter{iloop}\ifnum\value{iloop}<\the\numexpr5-\imax\relax
+\openbigstar[.9]\repeat}}
+
+%%%%%%
+ 
+%%%%%%%%%%%%%%%%%%% Hier Aufgaben einfügen %%%%%%%%%%%%%%%%%%%%%%
+\input{Aufgabe1.tex}
+\input{Aufgabe2.tex} 
+\input{Aufgabe3.tex}
+%\input{Aufgabe4.tex}
+%\input{Aufgabe5.tex}
+%\input{Aufgabe6.tex} 
+%\input{Aufgabe7.tex} 
+%\input{Aufgabe8.tex} 
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ \sichermich{nAufgabe}{maxAufgaben}
+ \sichermich{sumGesamt}{Gesamtpunkte}
+ \sichermich{aufgabe1punkte}{Punkte1}
+ \sichermich{aufgabe2punkte}{Punkte2}
+ \sichermich{aufgabe3punkte}{Punkte3}
+ \sichermich{aufgabe4punkte}{Punkte4}
+ \sichermich{aufgabe5punkte}{Punkte5}
+ \sichermich{aufgabe6punkte}{Punkte6}
+ \sichermich{aufgabe7punkte}{Punkte7}
+ \sichermich{aufgabe8punkte}{Punkte8}
+ \sichermich{aufgabe9punkte}{Punkte9}
+ \sichermich{aufgabe10punkte}{Punkte10}
+ \sichermich{aufgabe11punkte}{Punkte11}
+ \sichermich{aufgabe12punkte}{Punkte12}
+ \sichermich{aufgabe13punkte}{Punkte13}
+ \sichermich{aufgabe14punkte}{Punkte14}
+ \sichermich{aufgabe15punkte}{Punkte15}
+ \sichermich{aufgabe16punkte}{Punkte16}
+
+\begin{nichtloesung}
+\newpage\null\newpage\null\newpage
+\end{nichtloesung}
+\end{document}

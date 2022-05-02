@@ -1,0 +1,59 @@
+G 1.1: Distinguish between hierarchical structure and network structure in representing information.
+G 1.2: Outline basic internet and web technologies, describe the relation between them, and point out their differences.
+G 1.3: Assess the characteristics of decentralisation in information system architectures, and explain the network effect as expressed in Metcalfe’s Law.
+G 1.4: Identify resources and name resources via URIs: in absolute form, in relative form, as CURIEs.
+G 1.5: Read and interpret HTTP request/response interactions between user agent and server, including HTTP redirects and content negotiation.
+
+G 2.1: Distinguish between URIs for things and URIs for documents (“information resources”); tell information resources apart from other resources based on the URI of the resource.
+G 2.2: Transform graphical representations of RDF graphs to Turtle documents (including abbreviations).
+G 2.3: Transform Turtle documents (including abbreviations and the resolution of relative references) to simple triple form (N-Triples), and vice versa.
+G 2.4: Explain the mechanisms behind hash URIs and slash URIs for separating URIs denoting other resources from URIs denoting information resources.
+G 2.5: Decide whether a given RDF document adheres to the four Linked Data principles, and explain why (or why not).
+
+G 3.1: Explain the benefits of a graph-structured data model, and outline different serialisation syntaxes for RDF graphs.
+G 3.2: Correctly use RDF lists in both the Turtle syntax shortcut and the triple representation; correctly use reification in modelling.
+G 3.3: Decide whether two RDF graphs are subgraphs of each other.
+G 3.4: Check whether one graph is an instance of another graph; provide instance mappings between a graph and its instance.
+G 3.5: Construct an RDF dataset from multiple RDF graphs.
+
+G 4.1: Map HTTP methods to CRUD operations.
+G 4.2: Given a use case decide whether to use Basic, Direct or Indirect Container.
+G 4.3: Explain the motivation of the Solid project.
+G 4.4: Show how WebID, Solid OIDC and Web Access Control work together.
+
+G 5.1: Write BGP queries in SPARQL with query forms (SELECT, CONSTRUCT, ASK and DESCRIBE).
+G 5.2: Use FROM, FROM NAMED and GRAPH in queries in conjunction with RDF datasets.
+G 5.3: Correctly apply UNION and OPTIONAL in queries.
+G 5.4: Use FILTER and BIND ... AS in conjunction with expressions involving functions.
+G 5.5: Describe the handling of typed literals in SPARQL graph pattern matching and filter expressions.
+G 5.6: Apply ORDER BY, LIMIT and OFFSET in queries.
+
+G 6.1: Explain the formal definition of basic graph pattern matching show how to match basic graph patterns to graphs.
+G 6.2: Translate a given SPARQL WHERE clause, including UNION, OPTIONAL, FILTER and BIND AS clauses, to a SPARQL algebra expression.
+G 6.3: Given a query, explain the handling of the RDF dataset with FROM and FROM NAMED clauses in conjunction with GRAPH.
+G 6.4: Evaluate a SPARQL algebra expression on a given RDF dataset and specify the solutions of the entire algebra expression and also of partial expressions.
+G 6.5: Generate the final results to a SPARQL abstract query, taking into account the solution sequence of the graph pattern algebra expression and the query form.
+
+G 7.1: Understand and distinguish between the terms “Open Data”, “Linked Data”, and “Knowledge Graph”.
+G 7.2: Sketch the differences between an Extract-Transform-Loadarchitecture and a Virtual Integration architecture.
+G 7.3: Classify Open Data according to the 5-stars deployment scheme.
+G 7.4: Given several data sources in different formats (e.g., CSV, TSV, XML or JSON), describe the steps necessary to provide access to the sources as Linked Data.
+G 7.5: Partition RDF graphs into documents that adhere to the Linked Data principles, including the correct use of prefixes and vocabulary URIs.
+G 7.6: Compare and contrast different SPARQL query processor architectures.
+
+G 8.1: Distinguish between classes, properties and individuals in data modelling.
+G 8.2: List and describe the relations that can be expressed using the RDF and RDFS vocabularies between classes and between individuals and classes.
+G 8.3: List and describe the relations that can be expressed using the RDFS vocabulary between properties and between properties and classes.
+G 8.4: Design domain vocabularies in RDFS and relate terms from your vocabulary to terms from existing vocabularies.
+
+G 9.1: Compare and contrast the correspondence theory of truth, the coherence theory of truth and the consensus theory of truth.
+G 9.2: Given an RDF graph, an interpretation and the semantic conditions for simple (D-, RDF, RDFS) interpretations, check whether the interpretation simply (D-, RDF, RDFS) satisfies the graph.
+G 9.3: Identify reasons for D-(RDF, RDFS) unsatisfiabilityof RDF graphs.
+G 9.4: Explain which triples follow from a given graph according to simple (D-, RDF, RDFS) entailment.
+G 9.5: Decide whether a given triple follows according to simple (D-, RDF, RDFS) entailment; specify which entailment patterns and axiomatic triples are involved.
+
+G 10.1: Describe the two broad groups of OWL profiles and outline the differences between the two.
+G 10.2: Categorise properties as symmetric, inverse, transitive, functional, inverse functional, irreflexiveor asymmetric.
+G 10.3: Model ontologies in Turtle syntax based on a textual description, using URIs from the OWL vocabulary.
+G 10.4: Identify triples that lead to unsatisfiable graphs under OWL LD entailment.
+G 10.5: Map URIs of classes, properties and individuals from multiple RDF graphs using terms from the RDFS and OWL LD vocabularies.
