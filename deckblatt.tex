@@ -1,9 +1,3 @@
-% Deckblatt für das Template zum Erzeugen von Klausuren am AIFB
-% =============================================================
-%
-% In dieser Datei muss im Normalfall NICHTS angepasst werden!
-%
-%%
 \thispagestyle{empty}
 
 \newcounter{maxAufgabenNum}
@@ -11,103 +5,22 @@
 \newcounter{gesPunkteNum}
 \setcounterref{gesPunkteNum}{Gesamtpunkte}
 
-
-
-%\begin{minipage}[b]{0.45\textwidth}
-%\vtop{\vskip0pt\hbox{\ifthenelse{\boolean{klausurSpracheDeutsch}}{\includegraphics[height=2cm]{kit-de}}{\includegraphics[height=2cm]{}}}}
-%\end{minipage}
 \hfill
 \begin{minipage}[b]{0.7\textwidth}
 \vtop{\vskip0pt\flushright\includegraphics[height=2cm]{FAU_RWFak_Q_RGB_black}}
 \end{minipage}
 \begin{flushright}
-\ifthenelse{\boolean{klausurSpracheDeutsch}}{{\footnotesize Institut für Wirtschaftsinformatik}}{{Lehrstuhl f{\"u}r Wirtschaftsinformatik, insb. Technische Informationssysteme}}
+Lehrstuhl f{\"u}r Wirtschaftsinformatik, insb. Technische Informationssysteme
 \end{flushright}
 \begin{flushright}
 \vspace{0.5cm}\klausurdatum
 \end{flushright}
-%~\vspace{-2cm}
-%\begin{figure}[htbp]
-%  \begin{minipage}{0.65\textwidth}
-%    \raggedright
-%    \includegraphics*[height=2cm]{kit} \\
-%    \vspace{9ex} 
-%  \end{minipage}
-%  \begin{minipage}{0.35\textwidth}
-%  	\raggedright
-%  	\noindent\includegraphics*[width=1.2cm,angle=270]{aifb} \\
-%  	\footnotesize{
-%  	  Institut für Angewandte Informatik \\
-%  	  und Formale Beschreibungsverfahren
-%  	}
-%  	\vspace{3ex} \\
-%  	Prof. Dr. Hartmut Schmeck \\
-%  	Dr.-Ing. Sanaz Mostaghim \\
-%	Dipl.-Wi.-Ing. Friederike Pfeiffer % Hier Übungsleiter anpassen
-%	Dipl.-Inform. Micaela W\"{u}nsche  % Hier Übungsleiter anpassen
-%  \end{minipage}
-%\end{figure}
 
 \enlargethispage{3em}
-\ifthenelse{\boolean{klausurSpracheDeutsch}}
-{
-
 
 {\Large
 \begin{center}
-\ifthenelse{\boolean{bonusklausur}}{Bonusklausur}{Klausur} über den Stoff der Vorlesung
-	
-	\textbf{"`\klausurname"'}
-	
-	(\klausurminuten\ Minuten)
-\end{center}
-}
-
-{\large
-\vspace{1cm}
-\begin{tabular}{llll}
-Name: & \rule{5cm}{1pt} & Vorname: & \rule{5cm}{1pt}\\
-&&& \\
-Matr.-Nr.: & \rule{5cm}{1pt} & Table No.: & \rule{4.5cm}{1pt}
-\end{tabular}
-}
-
-~\vspace{0.0cm}
-
-Ich bestätige, dass ich die folgenden Angaben gelesen und mich von der Vollständigkeit dieses Klausurexemplars (Seiten 1-\pageref{LastPage}) überzeugt habe.
-
-~\vspace{0.5cm}
-
-\begin{flushright}
-\begin{minipage}{7.5cm}
-\rule{\textwidth}{0.5pt}
-Unterschrift des o.\,g. Klausur\-teil\-nehmers bzw. der o.\,g. Klausurteilnehmerin
-\end{minipage}
-\end{flushright}
-
-\textbf{Anmerkungen:}
-
-\begin{itemize}
-	\item[1.] Legen Sie bitte Ihren Studierendenausweis bereit.
-	\item[2.] Bitte tragen Sie \emph{Name}, \emph{Vorname}, \emph{Matr.-Nr.} und \emph{Tisch-Nr.} deutlich lesbar ein.
-	\item[3.] Die folgenden \textbf{\ref{maxAufgaben} Aufgaben} sind vollständig zu bearbeiten.
-	\item[4.] Folgende Hilfsmittel sind zugelassen: \textbf{\klausurhilfsmittel.}
-	\item[5.] Täuschungsversuche führen zum Ausschluss von der Klausur.
-	\item[6.] Unleserliche oder mit Bleistift geschriebene Lösungen können von der Klausur bzw. Wertung ausgeschlossen werden.
-	\item[7.] Die Bearbeitungszeit beträgt \klausurminuten\ Minuten.
-\end{itemize}
-~
-\smallbreak
-{\footnotesize
-\textbf{Nur für den Prüfer:}
-}
-
-
-}
-{
-{\Large
-\begin{center}
-\ifthenelse{\boolean{bonusklausur}}{Bonus-Exam}{Final Exam, \klausursemester}
+Final Exam, \klausursemester
 	
 	\textbf{\klausurname} 
 	
@@ -142,7 +55,7 @@ Signature of the above-named exam attendee
 
 \begin{itemize}
 	%\item[1.] Please have your student identity card ready.
-	\item[1.] Please fill in your \emph{last name}, \emph{first name}, \emph{matriculation number} and \emph{table number} legibly.
+	\item[1.] Please fill in your \underline{last name}, \underline{first name}, \underline{matriculation number} and \underline{table number} legibly.
 	\item[2.] No additional materials are allowed.
 	\item[3.] Attempts of deception lead to a disqualification from the exam.
 	\item[4.] Unreadable answers or answers written with a pencil can be disqualified from the evaluation.
@@ -153,196 +66,69 @@ Signature of the above-named exam attendee
 \smallbreak
 {\footnotesize
 \textbf{Only for the examiner:}
-%\hspace{2.5cm} 
-%\ifthenelse{\boolean{punkteZaehlen}}
-%{
-%\ifnum\thegesPunkteNum=\klausurminuten
-%(Maximal: \ref{Gesamtpunkte} Punkte)
-%\else
-%\begin{color}{red}(Maximal: \ref{Gesamtpunkte} Punkte)\end{color}
-%\fi
-%}
 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{countA}
+\def\myline{%
+    \stepcounter{countA}\ifthenelse{\the\numexpr\value{countA}-1<\themaxAufgabenNum}{\thecountA}{-}&
+    \ifnum\thecountA<9\myline\fi
 }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 {\footnotesize
 
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
 \hline
 
-\ifnum\themaxAufgabenNum>0
-1
-\else
--
-\fi
-& 
-\ifnum\themaxAufgabenNum>1
-2 
-\else
--
-\fi
-& 
-\ifnum\themaxAufgabenNum>2
-3 
-\else
--
-\fi
-& 
-\ifnum\themaxAufgabenNum>3
-4 
-\else
--
-\fi
-& 
-\ifnum\themaxAufgabenNum>4
-5 
-\else
--
-\fi
-& 
-\ifnum\themaxAufgabenNum>5
-6 
-\else
--
-\fi
-& 
-\ifnum\themaxAufgabenNum>6
-7 
-\else
--
-\fi
-& 
-\ifnum\themaxAufgabenNum>7
-8 
-\else
--
-\fi
-& 
-\ifnum\themaxAufgabenNum>8
-9 
-\else
--
-\fi
-& 
-\ifnum\themaxAufgabenNum>9
-10
-\else
--
-\fi
-& 
-\ifnum\themaxAufgabenNum>10
-11 
-\else
--
-\fi
-& 
-\ifnum\themaxAufgabenNum>11
-12 
-\else
--
-\fi
-& 
-\ifnum\themaxAufgabenNum>12
-13 
-\else
--
-\fi
-& 
-\ifnum\themaxAufgabenNum>13
-14 
-\else
--
-\fi
-& 
-\ifnum\themaxAufgabenNum>14
-15 
-\else
--
-\fi
-& 
-\ifnum\themaxAufgabenNum>15
-16 
-\else
--
-\fi
-& 
-\ifthenelse{\boolean{klausurSpracheDeutsch}}{gesamt}{total}\\
+\myline
+total\\
+
 \hline
-%\parbox{5mm}{~\vspace{7mm}} & \parbox{5mm}{~\vspace{6mm}} & \parbox{5mm}{~\vspace{6mm}} & \parbox{5mm}{~\vspace{6mm}} & \parbox{5mm}{~\vspace{6mm}} & \parbox{5mm}{~\vspace{6mm}} & \parbox{5mm}{~\vspace{6mm}} & \parbox{5mm}{~\vspace{6mm}} & \parbox{5mm}{~\vspace{6mm}} & \parbox{5mm}{~\vspace{6mm}} & \parbox{5mm}{~\vspace{6mm}} & \parbox{5mm}{~\vspace{6mm}} & \parbox{5mm}{~\vspace{6mm}} & \parbox{5mm}{~\vspace{6mm}} & \parbox{5mm}{~\vspace{6mm}} & \parbox{5mm}{~\vspace{6mm}} & \parbox{5mm}{~\vspace{6mm}} \\
 
 \ifnum\themaxAufgabenNum>0
-\ifthenelse{\boolean{punkteZaehlen}}{\tiny($\ref{Punkte1}$)}{}
+\tiny($\ref{Punkte1}$)
 \fi
 & 
 \ifnum\themaxAufgabenNum>1
-\ifthenelse{\boolean{punkteZaehlen}}{\tiny($\ref{Punkte2}$)}{}
+\tiny($\ref{Punkte2}$)
 \fi
 & 
 \ifnum\themaxAufgabenNum>2
-\ifthenelse{\boolean{punkteZaehlen}}{\tiny($\ref{Punkte3}$)}{}
+\tiny($\ref{Punkte3}$)
 \fi
 & 
 \ifnum\themaxAufgabenNum>3
-\ifthenelse{\boolean{punkteZaehlen}}{\tiny($\ref{Punkte4}$)}{}
+\tiny($\ref{Punkte4}$)
 \fi
 & 
 \ifnum\themaxAufgabenNum>4
-\ifthenelse{\boolean{punkteZaehlen}}{\tiny($\ref{Punkte5}$)}{}
+\tiny($\ref{Punkte5}$)
 \fi
 & 
 \ifnum\themaxAufgabenNum>5
-\ifthenelse{\boolean{punkteZaehlen}}{\tiny($\ref{Punkte6}$)}{}
+\tiny($\ref{Punkte6}$)
 \fi
 & 
 \ifnum\themaxAufgabenNum>6
-\ifthenelse{\boolean{punkteZaehlen}}{\tiny($\ref{Punkte7}$)}{}
+\tiny($\ref{Punkte7}$)
 \fi
 & 
 \ifnum\themaxAufgabenNum>7
-\ifthenelse{\boolean{punkteZaehlen}}{\tiny($\ref{Punkte8}$)}{}
+\tiny($\ref{Punkte8}$)
 \fi
 & 
 \ifnum\themaxAufgabenNum>8
-\ifthenelse{\boolean{punkteZaehlen}}{\tiny($\ref{Punkte9}$)}{}
+\tiny($\ref{Punkte9}$)
 \fi
 & 
-\ifnum\themaxAufgabenNum>9
-\ifthenelse{\boolean{punkteZaehlen}}{\tiny($\ref{Punkte10}$)}{}
-\fi
-& 
-\ifnum\themaxAufgabenNum>10
-\ifthenelse{\boolean{punkteZaehlen}}{\tiny($\ref{Punkte11}$)}{}
-\fi
-& 
-\ifnum\themaxAufgabenNum>11
-\ifthenelse{\boolean{punkteZaehlen}}{\tiny($\ref{Punkte12}$)}{}
-\fi
-& 
-\ifnum\themaxAufgabenNum>12
-\ifthenelse{\boolean{punkteZaehlen}}{\tiny($\ref{Punkte13}$)}{}
-\fi
-& 
-\ifnum\themaxAufgabenNum>13
-\ifthenelse{\boolean{punkteZaehlen}}{\tiny($\ref{Punkte14}$)}{}
-\fi
-& 
-\ifnum\themaxAufgabenNum>14
-\ifthenelse{\boolean{punkteZaehlen}}{\tiny($\ref{Punkte15}$)}{}
-\fi
-& 
-\ifnum\themaxAufgabenNum>15
-\ifthenelse{\boolean{punkteZaehlen}}{\tiny($\ref{Punkte16}$)}{}
-\fi
-& 
-\ifthenelse{\boolean{punkteZaehlen}}
-{\tiny$(
+\tiny$(
 \ifnum\thegesPunkteNum=\klausurminuten
 \ref{Gesamtpunkte}
 \else
 \begin{color}{red}\ref{Gesamtpunkte}\end{color}
 \fi
-)$}
-{}\\
+)$\\
 
 
 \ifnum\themaxAufgabenNum>0
@@ -378,34 +164,6 @@ Signature of the above-named exam attendee
 \fi
 & 
 \ifnum\themaxAufgabenNum>8
-\parbox{5mm}{~\vspace{5mm}}
-\fi
-& 
-\ifnum\themaxAufgabenNum>9
-\parbox{5mm}{~\vspace{5mm}}
-\fi
-& 
-\ifnum\themaxAufgabenNum>10
-\parbox{5mm}{~\vspace{5mm}}
-\fi
-& 
-\ifnum\themaxAufgabenNum>11
-\parbox{5mm}{~\vspace{5mm}}
-\fi
-& 
-\ifnum\themaxAufgabenNum>12
-\parbox{5mm}{~\vspace{5mm}}
-\fi
-& 
-\ifnum\themaxAufgabenNum>13
-\parbox{5mm}{~\vspace{5mm}}
-\fi
-& 
-\ifnum\themaxAufgabenNum>14
-\parbox{5mm}{~\vspace{5mm}}
-\fi
-& 
-\ifnum\themaxAufgabenNum>15
 \parbox{5mm}{~\vspace{5mm}}
 \fi
 & 
