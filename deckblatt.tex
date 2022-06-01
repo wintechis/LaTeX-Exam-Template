@@ -54,7 +54,6 @@ Signature of the above-named exam attendee
 \textbf{Notes:}
 
 \begin{itemize}
-	%\item[1.] Please have your student identity card ready.
 	\item[1.] Please fill in your \underline{last name}, \underline{first name}, \underline{matriculation number} and \underline{table number} legibly.
 	\item[2.] No additional materials are allowed.
 	\item[3.] Attempts of deception lead to a disqualification from the exam.
@@ -68,20 +67,26 @@ Signature of the above-named exam attendee
 \textbf{Only for the examiner:}
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcounter{countA}
-\def\myline{%
+\def\tablerowone{%
     \stepcounter{countA}\ifthenelse{\the\numexpr\value{countA}-1<\themaxAufgabenNum}{\thecountA}{-}&
-    \ifnum\thecountA<9\myline\fi
+    \ifnum\thecountA<9\tablerowone\fi
 }
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{countB}
+\def\tablerowtwo{%
+    \stepcounter{countB}\ifthenelse{\the\numexpr\value{countB}-1<\themaxAufgabenNum}{\parbox{5mm}{~\vspace{5mm}}}{}&
+    \ifnum\thecountB<9\tablerowtwo\fi
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 {\footnotesize
 
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
 \hline
 
-\myline
+\tablerowone
 total\\
 
 \hline
@@ -130,44 +135,7 @@ total\\
 \fi
 )$\\
 
-
-\ifnum\themaxAufgabenNum>0
-\parbox{5mm}{~\vspace{5mm}}
-\fi
-& 
-\ifnum\themaxAufgabenNum>1
-\parbox{5mm}{~\vspace{5mm}}
-\fi
-& 
-\ifnum\themaxAufgabenNum>2
-\parbox{5mm}{~\vspace{5mm}}
-\fi
-& 
-\ifnum\themaxAufgabenNum>3
-\parbox{5mm}{~\vspace{5mm}}
-\fi
-& 
-\ifnum\themaxAufgabenNum>4
-\parbox{5mm}{~\vspace{5mm}}
-\fi
-& 
-\ifnum\themaxAufgabenNum>5
-\parbox{5mm}{~\vspace{5mm}}
-\fi
-& 
-\ifnum\themaxAufgabenNum>6
-\parbox{5mm}{~\vspace{5mm}}
-\fi
-& 
-\ifnum\themaxAufgabenNum>7
-\parbox{5mm}{~\vspace{5mm}}
-\fi
-& 
-\ifnum\themaxAufgabenNum>8
-\parbox{5mm}{~\vspace{5mm}}
-\fi
-& 
-\\
+\tablerowtwo\\
 
 \hline
 \end{tabular}

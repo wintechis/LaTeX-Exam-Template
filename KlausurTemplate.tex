@@ -13,73 +13,46 @@
 \usepackage[ngerman]{babel}
 
 %% Hier Details zur Prüfung angeben %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newboolean{mitloesung} \setboolean{mitloesung}{false}                  %% Ob die Musterlösung ausgegeben werden soll
-\newboolean{mitlernzielen}\setboolean{mitlernzielen}{false}                 %% Ob die Lernziele ausgegeben werden soll (nur mit Lösung)
-%\newboolean{punkteZaehlen}\setboolean{punkteZaehlen}{true}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%KANN WEG -> Wird noch im Deckblatt verwendet
+\newboolean{mitloesung} \setboolean{mitloesung}{false}                  	%% Ob die Musterlösung ausgegeben werden soll
+\newboolean{mitlernzielen}\setboolean{mitlernzielen}{false}                 	%% Ob die Lernziele ausgegeben werden soll (nur mit Lösung)
 
- \def\klausurname{Foundations of Linked Data}  %% Der Name der Prüfung
- \def\klausurdatum{17.02.2022}             %% Das Datum, an dem die Prüfung stattfindet
- \def\klausursemester{Winter 2021/22}              %% Das Semester, in dem die Prüfung stattfindet
- \def\klausurminuten{60}                         %% Dauer der Klausur
+ \def\klausurname{Foundations of Linked Data} 				%% Der Name der Prüfung
+ \def\klausurdatum{17.02.2022}             					%% Das Datum, an dem die Prüfung stattfindet
+ \def\klausursemester{Winter 2021/22}              				%% Das Semester, in dem die Prüfung stattfindet
+ \def\klausurminuten{60}                         					%% Dauer der Klausur
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\newcommand{\sumText}{}
 \newcommand{\xmark}{\ding{55}}
-\setlength{\parindent}{0cm}
+
 \renewcommand{\labelenumi}{(\alph{enumi})}
 
-\newcounter{nAufgabe}
-\setcounter{nAufgabe}{0}
+\setlength{\parindent}{0cm}
 
-\newcounter{aufgabe1punkte}\setcounter{aufgabe1punkte}{0}
-\newcounter{aufgabe2punkte}\setcounter{aufgabe2punkte}{0}
-\newcounter{aufgabe3punkte}\setcounter{aufgabe3punkte}{0}
-\newcounter{aufgabe4punkte}\setcounter{aufgabe4punkte}{0}
-\newcounter{aufgabe5punkte}\setcounter{aufgabe5punkte}{0}
-\newcounter{aufgabe6punkte}\setcounter{aufgabe6punkte}{0}
-\newcounter{aufgabe7punkte}\setcounter{aufgabe7punkte}{0}
-\newcounter{aufgabe8punkte}\setcounter{aufgabe8punkte}{0}
-\newcounter{aufgabe9punkte}\setcounter{aufgabe9punkte}{0}
+\foreach \i in {aufgabe1punkte, aufgabe2punkte, aufgabe3punkte, aufgabe4punkte, aufgabe5punkte, aufgabe6punkte, aufgabe7punkte, aufgabe8punkte, aufgabe9punkte} {
+	\newcounter{\i}\setcounter{\i}{0}
+}
+
 \newcounter{sumNumText}
 \newcounter{zwischSum}
-
 \newcounter{sumhelp}
 \newcounter{sumGesamt}
+\newcounter{nAufgabe}
+
 \setcounter{sumGesamt}{0}
-\newcommand{\sumText}{}
+\setcounter{nAufgabe}{0}
 
 %% TEILAUFGABE-Umgebung%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \newenvironment{teilaufgabe}[1]
   	{  	
   		\setcounter{sumGesamt}{\thesumGesamt+#1}
 		\setcounter{zwischSum}{#1}
-		
-		\ifnum\thenAufgabe=1
-			\addtocounter{aufgabe1punkte}{#1}
-		\fi
-		\ifnum\thenAufgabe=2
-			\addtocounter{aufgabe2punkte}{#1}
-		\fi
-		\ifnum\thenAufgabe=3
-			\addtocounter{aufgabe3punkte}{#1}
-		\fi
-		\ifnum\thenAufgabe=4
-			\addtocounter{aufgabe4punkte}{#1}
-		\fi
-		\ifnum\thenAufgabe=5
-			\addtocounter{aufgabe5punkte}{#1}
-		\fi
-		\ifnum\thenAufgabe=6
-			\addtocounter{aufgabe6punkte}{#1}
-		\fi
-		\ifnum\thenAufgabe=7
-			\addtocounter{aufgabe7punkte}{#1}
-		\fi
-		\ifnum\thenAufgabe=8
-			\addtocounter{aufgabe8punkte}{#1}
-		\fi
-		\ifnum\thenAufgabe=9
-			\addtocounter{aufgabe9punkte}{#1}
-		\fi
+
+		\foreach \i/\j in {aufgabe1punkte/1, aufgabe2punkte/2, aufgabe3punkte/3, aufgabe4punkte/4, aufgabe5punkte/5, aufgabe6punkte/6, aufgabe7punkte/7, aufgabe8punkte/8, aufgabe9punkte/9} {
+			\ifnum\thenAufgabe=\j
+				\addtocounter{\i}{#1}
+			\fi
+		}
 	}
 	{
 		\begin{flushright}
@@ -88,7 +61,7 @@
 		\fbox{~~~~~~ / \thezwischSum}
 		\vspace{-0.3cm}
 		\end{flushright}
-	}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	}
 
 %% AUFGABE-Umgebung%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newenvironment{aufgabe}[9][]
@@ -135,33 +108,11 @@
 \vspace{-0.3cm}
 \end{flushright}
 
-\ifnum\thenAufgabe=1
-\setcounter{aufgabe1punkte}{\thesumhelp}
-\fi
-\ifnum\thenAufgabe=2
-\setcounter{aufgabe2punkte}{\thesumhelp}
-\fi
-\ifnum\thenAufgabe=3
-\setcounter{aufgabe3punkte}{\thesumhelp}
-\fi
-\ifnum\thenAufgabe=4
-\setcounter{aufgabe4punkte}{\thesumhelp}
-\fi
-\ifnum\thenAufgabe=5
-\setcounter{aufgabe5punkte}{\thesumhelp}
-\fi
-\ifnum\thenAufgabe=6
-\setcounter{aufgabe6punkte}{\thesumhelp}
-\fi
-\ifnum\thenAufgabe=7
-\setcounter{aufgabe7punkte}{\thesumhelp}
-\fi
-\ifnum\thenAufgabe=8
-\setcounter{aufgabe8punkte}{\thesumhelp}
-\fi
-\ifnum\thenAufgabe=9
-\setcounter{aufgabe9punkte}{\thesumhelp}
-\fi
+\foreach \i/\j in {aufgabe1punkte/1, aufgabe2punkte/2, aufgabe3punkte/3, aufgabe4punkte/4, aufgabe5punkte/5, aufgabe6punkte/6, aufgabe7punkte/7, aufgabe8punkte/8, aufgabe9punkte/9} {
+	\ifnum\thenAufgabe=\j
+		\setcounter{\i}{\thesumhelp}
+	\fi
+}
 
 }%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -218,31 +169,16 @@
  	\setcounter{page}{0}
 \end{nichtloesung}
 
+\foreach \i in {Aufgabe1.tex, Aufgabe2.tex, Aufgabe3.tex, Aufgabe4.tex, Aufgabe5.tex, Aufgabe6.tex, Aufgabe7.tex, Aufgabe8.tex, Aufgabe9.tex} {
+	\IfFileExists{\i}{\input{\i}}{}
+}
 
- 
-%%%%%%%%%%%%%%%%%%% Hier Aufgaben einfügen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\input{Aufgabe1.tex}
-\input{Aufgabe2.tex} 
-\input{Aufgabe3.tex}
-%\input{Aufgabe4.tex}
-%\input{Aufgabe5.tex}
-%\input{Aufgabe6.tex} 
-%\input{Aufgabe7.tex} 
-%\input{Aufgabe8.tex} 
-%\input{Aufgabe9.tex} 
- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\sichermich{nAufgabe}{maxAufgaben}
+\sichermich{sumGesamt}{Gesamtpunkte}
 
- \sichermich{nAufgabe}{maxAufgaben}
- \sichermich{sumGesamt}{Gesamtpunkte}
- \sichermich{aufgabe1punkte}{Punkte1}
- \sichermich{aufgabe2punkte}{Punkte2}
- \sichermich{aufgabe3punkte}{Punkte3}
- \sichermich{aufgabe4punkte}{Punkte4}
- \sichermich{aufgabe5punkte}{Punkte5}
- \sichermich{aufgabe6punkte}{Punkte6}
- \sichermich{aufgabe7punkte}{Punkte7}
- \sichermich{aufgabe8punkte}{Punkte8}
- \sichermich{aufgabe9punkte}{Punkte9}
+\foreach \i/\j in {aufgabe1punkte/Punkte1, aufgabe2punkte/Punkte2, aufgabe3punkte/Punkte3, aufgabe4punkte/Punkte4, aufgabe5punkte/Punkte5, aufgabe6punkte/Punkte6, aufgabe7punkte/Punkte7, aufgabe8punkte/Punkte8, aufgabe9punkte/Punkte9} {
+	\sichermich{\i}{\j}
+}
 
 \begin{nichtloesung}
 \newpage\null\newpage\null\newpage

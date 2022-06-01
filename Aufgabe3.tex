@@ -1,9 +1,3 @@
-% Alle nichtoptionalen Parameter der aufgabe-Umgebung sind Punktezahlen. 
-% Sie müssen ganzzahlig sein, wenn Punktezählen aktiviert ist; Nullen werden ignoriert.
-% Falls Punkte zählen deaktiviert ist, muss als letzter (8.) Parameter die Summe angegeben werden.
-% Die [Kurzbeschreibung] ist optional, danach MÜSSEN 8 numerische Parameter kommen.
-% Für die Bonusklausur werden die Parameter vollständig ignoriert.
-
 \newpage
 \begin{aufgabe}{0}{0}{0}{0}{0}{0}{0}{0}
 \vspace{0.2cm}
@@ -24,13 +18,7 @@
 				\def\unitfactor{0.9}
 				\newthread{useragent}{:\ User Agent}
 				\newinst[7.5cm]{server1}{ex.org :\ Server}
-				%
-				%\begin{call}{useragent}{ GET /data\#Karlsruhe HTTP/1.1 \\ \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_: Mozilla 5.0 (Chrome/49.0.2623.112)}{server1}{HTTP/1.1 404 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}
-				%\end{call}
-				%
-				%
 				\begin{call}{useragent}{ \_\_\_\_\_ /mygeo HTTP/1.1 }
-				%
 				{server1}{HTTP/1.1 \_\_\_\_\_ Not found % \\ Content-Location: \_\_\_\_\_\_\_\_\_\_\_\_ 
 				\\ \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_: text/html; charset=utf-8
 				}
@@ -44,13 +32,7 @@
 				\def\unitfactor{0.9}
 				\newthread{useragent}{:\ User Agent}
 				\newinst[7.5cm]{server1}{ex.org :\ Server}
-				%
-				%\begin{call}{useragent}{ GET /data\#Karlsruhe HTTP/1.1 \\ \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_: Mozilla 5.0 (Chrome/49.0.2623.112)}{server1}{HTTP/1.1 404 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}
-				%\end{call}
-				%
-				%
 				\begin{call}{useragent}{ GET /mygeo HTTP/1.1 }
-				%
 				{server1}{HTTP/1.1 404 Not found % \\ Content-Location: \_\_\_\_\_\_\_\_\_\_\_\_ 
 				\\ Content-Type: text/html; charset=utf-8
 				}
