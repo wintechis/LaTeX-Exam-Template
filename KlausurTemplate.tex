@@ -1,186 +1,52 @@
-\documentclass[12pt, a4paper, oneside]{scrartcl}
-
-\usepackage{array}
-\usepackage{version}
-\usepackage{txfonts}
-\usepackage{scrlayer-scrpage}
-\usepackage{lastpage}
-\usepackage{refcount}
-\usepackage{todonotes}
-\usepackage{fancyvrb}
-\usepackage{pgf-umlsd}
-\usepackage{pifont}
-\usepackage[ngerman]{babel}
-
-%% Hier Details zur Prüfung angeben %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newboolean{mitloesung} \setboolean{mitloesung}{false}                  	%% Ob die Musterlösung ausgegeben werden soll
-\newboolean{mitlernzielen}\setboolean{mitlernzielen}{false}                 	%% Ob die Lernziele ausgegeben werden soll (nur mit Lösung)
-
- \def\klausurname{Foundations of Linked Data} 				%% Der Name der Prüfung
- \def\klausurdatum{17.02.2022}             					%% Das Datum, an dem die Prüfung stattfindet
- \def\klausursemester{Winter 2021/22}              				%% Das Semester, in dem die Prüfung stattfindet
- \def\klausurminuten{60}                         					%% Dauer der Klausur
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newcommand{\sumText}{}
-\newcommand{\xmark}{\ding{55}}
-
-\renewcommand{\labelenumi}{(\alph{enumi})}
-
-\setlength{\parindent}{0cm}
-
-\foreach \i in {aufgabe1punkte, aufgabe2punkte, aufgabe3punkte, aufgabe4punkte, aufgabe5punkte, aufgabe6punkte, aufgabe7punkte, aufgabe8punkte, aufgabe9punkte} {
-	\newcounter{\i}\setcounter{\i}{0}
-}
-
-\newcounter{sumNumText}
-\newcounter{zwischSum}
-\newcounter{sumhelp}
-\newcounter{sumGesamt}
-\newcounter{nAufgabe}
-
-\setcounter{sumGesamt}{0}
-\setcounter{nAufgabe}{0}
-
-%% TEILAUFGABE-Umgebung%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \newenvironment{teilaufgabe}[1]
-  	{  	
-  		\setcounter{sumGesamt}{\thesumGesamt+#1}
-		\setcounter{zwischSum}{#1}
-
-		\foreach \i/\j in {aufgabe1punkte/1, aufgabe2punkte/2, aufgabe3punkte/3, aufgabe4punkte/4, aufgabe5punkte/5, aufgabe6punkte/6, aufgabe7punkte/7, aufgabe8punkte/8, aufgabe9punkte/9} {
-			\ifnum\thenAufgabe=\j
-				\addtocounter{\i}{#1}
-			\fi
-		}
-	}
-	{
-		\begin{flushright}
-		\vspace{-0.7cm}
-		\large
-		\fbox{~~~~~~ / \thezwischSum}
-		\vspace{-0.3cm}
-		\end{flushright}
-	}
-
-%% AUFGABE-Umgebung%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newenvironment{aufgabe}[9][]
-{
-
-\setcounter{sumhelp}{#2+#3+#4+#5+#6+#7+#8+#9}
-
-\ifnum#2>0
-	\renewcommand{\sumText}{}
-	\ifnum#3>0
-		\renewcommand{\sumText}{#2+#3=}
-		\ifnum#4>0
-			\renewcommand{\sumText}{#2+#3+#4=}
-			\ifnum#5>0
-				\renewcommand{\sumText}{#2+#3+#4+#5=}
-				\ifnum#6>0
-					\renewcommand{\sumText}{#2+#3+#4+#5+#6=}
-					\ifnum#7>0
-						\renewcommand{\sumText}{#2+#3+#4+#5+#6+#7=}
-						\ifnum#8>0
-							\renewcommand{\sumText}{#2+#3+#4+#5+#6+#7+#8=}
-							\ifnum#9>0
-								\renewcommand{\sumText}{#2+#3+#4+#5+#6+#7+#8+#9=}
-\fi\fi\fi\fi\fi\fi\fi\fi
-
-\setcounter{sumGesamt}{\thesumGesamt+\thesumhelp}
-
-\textbf{\sffamily Question \refstepcounter{nAufgabe}\arabic{nAufgabe}. }
-\ifthenelse{\value{nAufgabe}=1}{\newcommand{\sumNumText}{\ref{Punkte1}}}{}
-\ifthenelse{\value{nAufgabe}=2}{\newcommand{\sumNumText}{\ref{Punkte2}}}{}
-\ifthenelse{\value{nAufgabe}=3}{\newcommand{\sumNumText}{\ref{Punkte3}}}{}
-\ifthenelse{\value{nAufgabe}=4}{\newcommand{\sumNumText}{\ref{Punkte4}}}{}
-\ifthenelse{\value{nAufgabe}=5}{\newcommand{\sumNumText}{\ref{Punkte5}}}{}
-\ifthenelse{\value{nAufgabe}=6}{\newcommand{\sumNumText}{\ref{Punkte6}}}{}
-\ifthenelse{\value{nAufgabe}=7}{\newcommand{\sumNumText}{\ref{Punkte7}}}{}
-\ifthenelse{\value{nAufgabe}=8}{\newcommand{\sumNumText}{\ref{Punkte8}}}{}
-\ifthenelse{\value{nAufgabe}=9}{\newcommand{\sumNumText}{\ref{Punkte9}}}{}
-\hfill($\sumText \sumNumText$ Points)\\
-
-\begin{flushright}
-\vspace{-0.7cm}
-\Large
-\fbox{~~~~~~ / \sumNumText}
-\vspace{-0.3cm}
-\end{flushright}
-
-\foreach \i/\j in {aufgabe1punkte/1, aufgabe2punkte/2, aufgabe3punkte/3, aufgabe4punkte/4, aufgabe5punkte/5, aufgabe6punkte/6, aufgabe7punkte/7, aufgabe8punkte/8, aufgabe9punkte/9} {
-	\ifnum\thenAufgabe=\j
-		\setcounter{\i}{\thesumhelp}
-	\fi
-}
-
-}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newcommand{\sichermich}[2]{
- \begingroup
- \expandafter\def\csname the#1\endcsname{\number\csname c@#1\endcsname}%
- \addtocounter{#1}{-1}\refstepcounter{#1}\label{#2}%
- \endgroup}
-
 \ihead{\klausurname\ -- Exam \klausurdatum\ -- \klausursemester\ -- 
 \ifthenelse{\boolean{mitloesung}}
-{\ref{maxAufgaben} Aufg./\pageref{LastPage} Seiten}
-{Mat.No.:}}
+	{\ref{maxAufgaben} Tasks / \pageref{LastPage} Pages}
+	{Mat.No.:}}
+
 \ohead{\pagemark}
 \cfoot{~}
 \setheadsepline{.4pt}
 
 \ifthenelse{\boolean{mitloesung}}
-  {
-  \includeversion{loesung}
-  \excludeversion{nichtloesung}}
-  {
-  \includeversion{nichtloesung}
-  \excludeversion{loesung}}
+	{\includeversion{loesung}\excludeversion{nichtloesung}}
+	{\includeversion{nichtloesung}\excludeversion{loesung}}
 
 \ifthenelse{\boolean{mitlernzielen}}
-  {
-	\ifthenelse{\boolean{mitloesung}}
+	{\ifthenelse{\boolean{mitloesung}}
 		{\includeversion{lernziel}}
 		{\excludeversion{lernziel}}}
-  {\excludeversion{lernziel}}
+	{\excludeversion{lernziel}}
 
 \begin{document}
-
-\begin{loesung}
-\newcounter{gesPunkteNum}
-\setcounterref{gesPunkteNum}{Gesamtpunkte}
-~
-	\vspace{5cm}
-	\begin{center}
-		\Large
-		Lösung
-		
-		\bigbreak
-		(\thegesPunkteNum\ Points)
-		
-		\normalsize
-	\end{center}
-	\newpage
-\end{loesung}
-
-\begin{nichtloesung}
-	\input{deckblatt.tex}
- 	\setcounter{page}{0}
-\end{nichtloesung}
-
-\foreach \i in {Aufgabe1.tex, Aufgabe2.tex, Aufgabe3.tex, Aufgabe4.tex, Aufgabe5.tex, Aufgabe6.tex, Aufgabe7.tex, Aufgabe8.tex, Aufgabe9.tex} {
-	\IfFileExists{\i}{\input{\i}}{}
-}
-
-\sichermich{nAufgabe}{maxAufgaben}
-\sichermich{sumGesamt}{Gesamtpunkte}
-
-\foreach \i/\j in {aufgabe1punkte/Punkte1, aufgabe2punkte/Punkte2, aufgabe3punkte/Punkte3, aufgabe4punkte/Punkte4, aufgabe5punkte/Punkte5, aufgabe6punkte/Punkte6, aufgabe7punkte/Punkte7, aufgabe8punkte/Punkte8, aufgabe9punkte/Punkte9} {
-	\sichermich{\i}{\j}
-}
-
-\begin{nichtloesung}
-\newpage\null\newpage\null\newpage
-\end{nichtloesung}
+	\begin{loesung}
+		\newcounter{gesPunkteNum}
+		\setcounterref{gesPunkteNum}{Gesamtpunkte}
+		~
+		\vspace{5cm}
+		\begin{center}
+			\Large
+			Solution
+			\bigbreak
+			(\thegesPunkteNum\ Points)
+			\normalsize
+		\end{center}
+		\newpage
+	\end{loesung}
+	
+	\begin{nichtloesung}
+		\input{deckblatt.tex}
+	 	\setcounter{page}{0}
+	\end{nichtloesung}
+	
+	\foreach \i in {Aufgabe1.tex, Aufgabe2.tex, Aufgabe3.tex, Aufgabe4.tex, Aufgabe5.tex, Aufgabe6.tex, Aufgabe7.tex, Aufgabe8.tex, Aufgabe9.tex} {
+		\IfFileExists{\i}{\input{\i}}{}
+	}
+	
+	\foreach \i/\j in {nAufgabe/maxAufgaben, sumGesamt/Gesamtpunkte, aufgabe1punkte/Punkte1, aufgabe2punkte/Punkte2, aufgabe3punkte/Punkte3, aufgabe4punkte/Punkte4, aufgabe5punkte/Punkte5, aufgabe6punkte/Punkte6, aufgabe7punkte/Punkte7, aufgabe8punkte/Punkte8, aufgabe9punkte/Punkte9} {
+		\sichermich{\i}{\j}
+	}
+	
+	\begin{nichtloesung}
+		\newpage\null\newpage\null\newpage
+	\end{nichtloesung}
 \end{document}

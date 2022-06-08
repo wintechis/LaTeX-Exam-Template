@@ -1,0 +1,88 @@
+\documentclass[12pt, a4paper, oneside]{scrartcl}
+
+\usepackage{array}
+\usepackage{version}
+\usepackage{txfonts}
+\usepackage{scrlayer-scrpage}
+\usepackage{lastpage}
+\usepackage{refcount}
+\usepackage{todonotes}
+\usepackage{fancyvrb}
+\usepackage{pgf-umlsd}
+\usepackage{pifont}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+
+\foreach \i in {aufgabe1punkte, aufgabe2punkte, aufgabe3punkte, aufgabe4punkte, aufgabe5punkte, aufgabe6punkte, aufgabe7punkte, aufgabe8punkte, aufgabe9punkte} {
+	\newcounter{\i}\setcounter{\i}{0}
+}
+
+\newcounter{sumGesamt}\setcounter{sumGesamt}{0}
+\newcounter{nAufgabe}\setcounter{nAufgabe}{0}
+\newcounter{sumNumText}
+\newcounter{zwischSum}
+\newcounter{sumhelp}
+
+\newcommand{\xmark}{\ding{55}}
+\renewcommand{\labelenumi}{(\alph{enumi})}
+\setlength{\parindent}{0cm}
+
+\newcommand{\sichermich}[2]{
+	\begingroup
+		\expandafter\def\csname the#1\endcsname{\number\csname c@#1\endcsname}
+		\addtocounter{#1}{-1}\refstepcounter{#1}\label{#2}%
+	\endgroup}
+
+%% TEILAUFGABE-Umgebung%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{teilaufgabe}[1]
+{  	
+	\setcounter{sumGesamt}{\thesumGesamt+#1}
+	\setcounter{zwischSum}{#1}
+
+	\foreach \i/\j in {aufgabe1punkte/1, aufgabe2punkte/2, aufgabe3punkte/3, aufgabe4punkte/4, aufgabe5punkte/5, aufgabe6punkte/6, aufgabe7punkte/7, aufgabe8punkte/8, aufgabe9punkte/9} {
+		\ifnum\thenAufgabe=\j
+			\addtocounter{\i}{#1}
+		\fi
+	}
+}
+{
+	\begin{flushright}
+	\vspace{-0.7cm}
+	\large
+	\fbox{~~~~~~ / \thezwischSum}
+	\vspace{-0.3cm}
+	\end{flushright}
+}
+
+%% AUFGABE-Umgebung%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{aufgabe}[1]
+{
+	\setcounter{sumhelp}{#1}
+	\setcounter{sumGesamt}{\thesumGesamt+\thesumhelp}
+
+	\textbf{\sffamily Question \refstepcounter{nAufgabe}\arabic{nAufgabe}. }
+	\ifthenelse{\value{nAufgabe}=1}{\newcommand{\sumNumText}{\ref{Punkte1}}}{}
+	\ifthenelse{\value{nAufgabe}=2}{\newcommand{\sumNumText}{\ref{Punkte2}}}{}
+	\ifthenelse{\value{nAufgabe}=3}{\newcommand{\sumNumText}{\ref{Punkte3}}}{}
+	\ifthenelse{\value{nAufgabe}=4}{\newcommand{\sumNumText}{\ref{Punkte4}}}{}
+	\ifthenelse{\value{nAufgabe}=5}{\newcommand{\sumNumText}{\ref{Punkte5}}}{}
+	\ifthenelse{\value{nAufgabe}=6}{\newcommand{\sumNumText}{\ref{Punkte6}}}{}
+	\ifthenelse{\value{nAufgabe}=7}{\newcommand{\sumNumText}{\ref{Punkte7}}}{}
+	\ifthenelse{\value{nAufgabe}=8}{\newcommand{\sumNumText}{\ref{Punkte8}}}{}
+	\ifthenelse{\value{nAufgabe}=9}{\newcommand{\sumNumText}{\ref{Punkte9}}}{}
+	\hfill($\sumNumText$ Points)\\
+
+	\begin{flushright}
+		\vspace{-0.7cm}
+		\Large
+		\fbox{~~~~~~ / \sumNumText}
+		\vspace{-0.3cm}
+	\end{flushright}
+
+	\foreach \i/\j in {aufgabe1punkte/1, aufgabe2punkte/2, aufgabe3punkte/3, aufgabe4punkte/4, aufgabe5punkte/5, aufgabe6punkte/6, aufgabe7punkte/7, aufgabe8punkte/8, aufgabe9punkte/9} {
+		\ifnum\thenAufgabe=\j
+			\setcounter{\i}{\thesumhelp}
+		\fi
+	}
+}
+
