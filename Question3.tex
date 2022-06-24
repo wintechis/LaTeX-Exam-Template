@@ -1,0 +1,71 @@
+\newpage
+\begin{question}{10}
+	\vspace{0.2cm}
+	
+	\begin{enumerate}
+		\begin{subquestion}{6}
+			\item Complete the following sequence diagram. 
+			\vspace{0.5cm}
+			\begin{learningGoal}\textbf{G 1.5}\end{learningGoal}
+			
+			\begin{notSolution}
+				\begin{sequencediagram}
+					\def\unitfactor{0.9}
+					\newthread{useragent}{:\ User Agent}
+					\newinst[7.5cm]{server1}{ex.org :\ Server}
+					\begin{call}{useragent}{ \_\_\_\_\_ /mygeo HTTP/1.1 }
+					{server1}{HTTP/1.1 \_\_\_\_\_ Not found
+					\\ \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_: text/html; charset=utf-8
+					}
+					\end{call}
+				\end{sequencediagram}
+			\end{notSolution}
+	
+			\begin{solution}
+				\textbf{Solution:}
+				\begin{sequencediagram}
+					\def\unitfactor{0.9}
+					\newthread{useragent}{:\ User Agent}
+					\newinst[7.5cm]{server1}{ex.org :\ Server}
+					\begin{call}{useragent}{ GET /mygeo HTTP/1.1 }
+					{server1}{HTTP/1.1 404 Not found
+					\\ Content-Type: text/html; charset=utf-8
+					}
+					\end{call}
+				\end{sequencediagram}
+			\end{solution}
+		\end{subquestion}
+	
+		\begin{subquestion}{2}
+			\item Map the HTTP methods (DELETE, GET, POST, PUT) with their comparable CRUD Operation in the table below by completing the entries in the table. Note that there can be more than one value within a cell.
+			\begin{learningGoal}\textbf{G 4.1}\end{learningGoal}
+			\begin{notSolution}
+				\begin{center}
+					\setlength\extrarowheight{3pt}
+					\begin{tabular}{|c|c|}
+						\hline
+						\textbf{CRUD Operations} & \textbf{HTTP Methods} \\ \hline
+						Create                   &              \\ \hline
+						                     	 & GET                   \\ \hline
+						Update                   &                    \\ \hline
+						Delete                   & 		                \\ \hline
+						\end{tabular}
+				  \end{center}
+			\end{notSolution}
+			
+			\begin{solution}
+				\textbf{Solution:}
+				\begin{center}
+					\begin{tabular}{|c|l|}
+						\hline
+						\textbf{CRUD-Operations} & \textbf{HTTP Methods} \\ \hline
+						Create                   & POST, PUT             \\ \hline
+						Read                     & GET                   \\ \hline
+						Update                   & PUT                   \\ \hline
+						Delete                   & DELETE                \\ \hline
+						\end{tabular}
+				  \end{center}
+			\end{solution}
+		\end{subquestion}
+	\end{enumerate}
+\end{question}

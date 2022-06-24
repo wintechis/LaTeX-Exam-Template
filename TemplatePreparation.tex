@@ -13,35 +13,73 @@
 \usepackage[ngerman]{babel}
 \usepackage[T1]{fontenc}
 
-\foreach \i in {aufgabe1punkte, aufgabe2punkte, aufgabe3punkte, aufgabe4punkte, aufgabe5punkte, aufgabe6punkte, aufgabe7punkte, aufgabe8punkte, aufgabe9punkte} {
+\foreach \i in {points1, points2, points3, points4, points5, points6, points7, points8, points9} {
 	\newcounter{\i}\setcounter{\i}{0}
 }
 
-\newcounter{sumGesamt}\setcounter{sumGesamt}{0}
-\newcounter{nAufgabe}\setcounter{nAufgabe}{0}
-\newcounter{sumNumText}
-\newcounter{zwischSum}
-\newcounter{sumhelp}
+\newcounter{pointsTotal}\setcounter{pointsTotal}{0}
+\newcounter{questionCount}\setcounter{questionCount}{0}
+\newcounter{subquestionCount}
+\newcounter{pointsCurrentQuestion}
+\newcounter{pointsCurrentSubquestion}
 
 \newcommand{\xmark}{\ding{55}}
 \renewcommand{\labelenumi}{(\alph{enumi})}
 \setlength{\parindent}{0cm}
 
-\newcommand{\sichermich}[2]{
+\newcommand{\save}[2]{
 	\begingroup
 		\expandafter\def\csname the#1\endcsname{\number\csname c@#1\endcsname}
-		\addtocounter{#1}{-1}\refstepcounter{#1}\label{#2}%
+		\addtocounter{#1}{-1}\refstepcounter{#1}\label{#2}
 	\endgroup}
 
-%% TEILAUFGABE-Umgebung%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newenvironment{teilaufgabe}[1]
-{  	
-	\setcounter{sumGesamt}{\thesumGesamt+#1}
-	\setcounter{zwischSum}{#1}
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{question}[1]
+{
+	\setcounter{subquestionCount}{0}
+	\setcounter{pointsCurrentQuestion}{#1}
+	\setcounter{pointsTotal}{\value{pointsTotal}+\value{pointsCurrentQuestion}}
 
-	\foreach \i/\j in {aufgabe1punkte/1, aufgabe2punkte/2, aufgabe3punkte/3, aufgabe4punkte/4, aufgabe5punkte/5, aufgabe6punkte/6, aufgabe7punkte/7, aufgabe8punkte/8, aufgabe9punkte/9} {
-		\ifnum\thenAufgabe=\j
-			\addtocounter{\i}{#1}
+	\textbf{\sffamily Question \refstepcounter{questionCount}\arabic{questionCount}. }
+	\ifthenelse{\value{questionCount}=1}{\newcommand{\pointsText}{\ref{points1S}}}{}
+	\ifthenelse{\value{questionCount}=2}{\newcommand{\pointsText}{\ref{points2S}}}{}
+	\ifthenelse{\value{questionCount}=3}{\newcommand{\pointsText}{\ref{points3S}}}{}
+	\ifthenelse{\value{questionCount}=4}{\newcommand{\pointsText}{\ref{points4S}}}{}
+	\ifthenelse{\value{questionCount}=5}{\newcommand{\pointsText}{\ref{points5S}}}{}
+	\ifthenelse{\value{questionCount}=6}{\newcommand{\pointsText}{\ref{points6S}}}{}
+	\ifthenelse{\value{questionCount}=7}{\newcommand{\pointsText}{\ref{points7S}}}{}
+	\ifthenelse{\value{questionCount}=8}{\newcommand{\pointsText}{\ref{points8S}}}{}
+	\ifthenelse{\value{questionCount}=9}{\newcommand{\pointsText}{\ref{points9S}}}{}
+	\hfill($\pointsText$ Points)\\
+
+	\begin{flushright}
+		\vspace{-0.7cm}
+		\Large
+		\fbox{~~~~~~ / \pointsText}
+		\vspace{-0.3cm}
+	\end{flushright}
+
+	\foreach \i/\j in {points1/1, points2/2, points3/3, points4/4, points5/5, points6/6, points7/7, points8/8, points9/9} {
+		\ifnum\value{questionCount}=\j
+			\setcounter{\i}{\value{pointsCurrentQuestion}}
+		\fi
+	}
+}
+
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{subquestion}[1]
+{  	
+	\stepcounter{subquestionCount}
+	\setcounter{pointsCurrentSubquestion}{#1}
+	\setcounter{pointsTotal}{\value{pointsTotal}+\value{pointsCurrentSubquestion}}
+
+	\foreach \i/\j in {points1/1, points2/2, points3/3, points4/4, points5/5, points6/6, points7/7, points8/8, points9/9} {
+		\ifnum\value{questionCount}=\j
+			\ifnum\value{subquestionCount}=1
+				\addtocounter{pointsTotal}{-\value{\i}}
+				\setcounter{\i}{0}
+			\fi
+			\addtocounter{\i}{\value{pointsCurrentSubquestion}}
 		\fi
 	}
 }
@@ -49,40 +87,7 @@
 	\begin{flushright}
 	\vspace{-0.7cm}
 	\large
-	\fbox{~~~~~~ / \thezwischSum}
+	\fbox{~~~~~~ / \thepointsCurrentSubquestion}
 	\vspace{-0.3cm}
 	\end{flushright}
 }
-
-%% AUFGABE-Umgebung%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newenvironment{aufgabe}[1]
-{
-	\setcounter{sumhelp}{#1}
-	\setcounter{sumGesamt}{\thesumGesamt+\thesumhelp}
-
-	\textbf{\sffamily Question \refstepcounter{nAufgabe}\arabic{nAufgabe}. }
-	\ifthenelse{\value{nAufgabe}=1}{\newcommand{\sumNumText}{\ref{Punkte1}}}{}
-	\ifthenelse{\value{nAufgabe}=2}{\newcommand{\sumNumText}{\ref{Punkte2}}}{}
-	\ifthenelse{\value{nAufgabe}=3}{\newcommand{\sumNumText}{\ref{Punkte3}}}{}
-	\ifthenelse{\value{nAufgabe}=4}{\newcommand{\sumNumText}{\ref{Punkte4}}}{}
-	\ifthenelse{\value{nAufgabe}=5}{\newcommand{\sumNumText}{\ref{Punkte5}}}{}
-	\ifthenelse{\value{nAufgabe}=6}{\newcommand{\sumNumText}{\ref{Punkte6}}}{}
-	\ifthenelse{\value{nAufgabe}=7}{\newcommand{\sumNumText}{\ref{Punkte7}}}{}
-	\ifthenelse{\value{nAufgabe}=8}{\newcommand{\sumNumText}{\ref{Punkte8}}}{}
-	\ifthenelse{\value{nAufgabe}=9}{\newcommand{\sumNumText}{\ref{Punkte9}}}{}
-	\hfill($\sumNumText$ Points)\\
-
-	\begin{flushright}
-		\vspace{-0.7cm}
-		\Large
-		\fbox{~~~~~~ / \sumNumText}
-		\vspace{-0.3cm}
-	\end{flushright}
-
-	\foreach \i/\j in {aufgabe1punkte/1, aufgabe2punkte/2, aufgabe3punkte/3, aufgabe4punkte/4, aufgabe5punkte/5, aufgabe6punkte/6, aufgabe7punkte/7, aufgabe8punkte/8, aufgabe9punkte/9} {
-		\ifnum\thenAufgabe=\j
-			\setcounter{\i}{\thesumhelp}
-		\fi
-	}
-}
-

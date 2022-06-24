@@ -1,0 +1,45 @@
+\newpage
+\begin{question}{10}
+	\vspace{0.2cm}
+	Task Question ...
+	
+	\begin{enumerate}
+		\begin{subquestion}{6}
+			\item
+			\begin{learningGoal}\textbf{G 3.2}\end{learningGoal}
+			
+			In the following code blocks are visualized.
+			\begin{notSolution}
+				\begin{Verbatim}
+  @prefix : <http://www.wiso-coffee.org/blog#> .
+  @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+  @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+  @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+				\end{Verbatim}
+				\vspace{8cm}
+			\end{notSolution}
+			
+			\begin{solution}
+				 \textbf{Solution:}
+				 \begin{footnotesize}
+				 	\begin{Verbatim}[frame=single]
+      @prefix : <http://www.wiso-coffee.org/blog#> .
+      @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+      @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+      @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+      
+      :bulldog      rdfs:label   "White Bulldog" ;
+		  :offers	[   a    :americano;
+				   :hasSize "normal";
+                                             :hasPrice "3€" ],
+                              		[   a    :americano;
+				   :hasSize "big";
+                                             :hasPrice "3.6€"^^xsd:string ].
+      :americano   a                 Coffee;
+		     rdfs:label    "Americano".
+					\end{Verbatim}
+				\end{footnotesize}  
+			\end{solution}
+		\end{subquestion}
+	\end{enumerate}
+\end{question}

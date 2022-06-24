@@ -1,0 +1,51 @@
+\ihead{\examName\ -- Exam \examDate\ -- \examSemester\ -- 
+\ifthenelse{\boolean{sampleSolution}}
+	{\ref{questionCountS} Tasks / \pageref{LastPage} Pages}
+	{Mat.No.:}}
+
+\ohead{\pagemark}
+\cfoot{~}
+\setheadsepline{.4pt}
+
+\ifthenelse{\boolean{sampleSolution}}
+	{\includeversion{solution}\excludeversion{notSolution}}
+	{\includeversion{notSolution}\excludeversion{solution}}
+
+\ifthenelse{\boolean{learningGoals}}
+	{\ifthenelse{\boolean{sampleSolution}}
+		{\includeversion{learningGoal}}
+		{\excludeversion{learningGoal}}}
+	{\excludeversion{learningGoal}}
+
+\begin{document}
+	\begin{solution}
+		\newcounter{pointsTotalText}\setcounterref{pointsTotalText}{pointsTotalS}
+		~
+		\vspace{5cm}
+		\begin{center}
+			\Large
+			Solution
+			\bigbreak
+			(\thepointsTotalText\ Points)
+			\normalsize
+		\end{center}
+		\newpage
+	\end{solution}
+	
+	\begin{notSolution}
+		\input{CoverSheet.tex}
+	 	\setcounter{page}{0}
+	\end{notSolution}
+	
+	\foreach \i in {Question1.tex, Question2.tex, Question3.tex, Question4.tex, Question5.tex, Question6.tex, Question7.tex, Question8.tex, Question9.tex} {
+		\IfFileExists{\i}{\input{\i}}{}
+	}
+	
+	\foreach \i/\j in {questionCount/questionCountS, pointsTotal/pointsTotalS, points1/points1S, points2/points2S, points3/points3S, points4/points4S, points5/points5S, points6/points6S, points7/points7S, points8/points8S, points9/points9S} {
+		\save{\i}{\j}
+	}
+	
+	\begin{notSolution}
+		\newpage\null\newpage\null\newpage
+	\end{notSolution}
+\end{document}
