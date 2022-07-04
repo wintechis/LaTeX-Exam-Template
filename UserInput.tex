@@ -2,14 +2,20 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newboolean{sampleSolution} \setboolean{sampleSolution}{false}
-\newboolean{learningGoals}\setboolean{learningGoals}{false}
+%% TODO rename .tex files from question#.text to task#.tex
 
-\def\examName{Foundations of Linked Data}
-\def\examDate{17.02.2022}
-\def\examSemester{Winter 2021/22}
-\def\examMinutes	{60}
+\newboolean{sampleSolution} \setboolean{sampleSolution}{false}
+%% TODO rename sampleSolution to showSolution
+\newboolean{learningGoals}\setboolean{learningGoals}{true}
+%% TODO rename learningGoals to showLearningGoals
+
+\def\examName{Foundations of Linked Data} % Course Title
+\def\examDate{17.02.2022} % Date of exam
+\def\examSemester{Winter 2021/22} % applicable semester,eg Winter 2021/22
+\def\examMinutes	{60} % total time duration of exam in minutes
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% TODO move editable values from coversheet here, like image, lehrstuhl, notes ...
 
 \input{ExamTemplate.tex}

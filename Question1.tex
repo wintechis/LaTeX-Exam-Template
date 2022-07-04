@@ -1,5 +1,7 @@
 \newpage
-\begin{question}{46}
+\begin{question}{10}
+%% TODO: create environ \begin{quiz}
+%% TODO: add function that automatically counts and returns number of quizitems. Use: \begin{question}{\countQuizItems}
 	\vspace{0.2cm}
 
 	 Quiz. Decide whether the following statements are true or false. Each correct answer leads to 1 point. \\
@@ -12,9 +14,11 @@
 		& \textbf{True} & \textbf{False} \\ 
                         
 		\begin{learningGoal}\textbf{G 1.2:}\end{learningGoal}
+%% TODO allow learning goal environment to have parameters. Use: \addGoals{1.2}{2.4}{3.3} -> should accept up to 5 goals. Also command should create a new line at the end.
 		This is statement 1  & 
 		 \begin{solution}\rlap{\xmark}\end{solution}$\Box$    &$\Box$    \\                                                                                                               
 		& & \\
+%% TODO if possible, consolidate two printed boxes with xmark to single function that considers xmark only when solution should be drawn. Use: statementsIs{true}. 
 
 		\begin{learningGoal}\textbf{G 1.2:}\end{learningGoal}
 		This is statement 2 & 
