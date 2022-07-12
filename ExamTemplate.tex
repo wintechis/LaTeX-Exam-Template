@@ -1,5 +1,5 @@
 \ihead{\examName\ -- Exam \examDate\ -- \examSemester\ -- 
-\ifthenelse{\boolean{sampleSolution}}
+\ifthenelse{\boolean{showSolution}}
 	{\ref{questionCountS} Tasks / \pageref{LastPage} Pages}
 	{Mat.No.:}}
 
@@ -7,15 +7,15 @@
 \cfoot{~}
 \setheadsepline{.4pt}
 
-\ifthenelse{\boolean{sampleSolution}}
-	{\includeversion{solution}\excludeversion{notSolution}}
-	{\includeversion{notSolution}\excludeversion{solution}}
+\ifthenelse{\boolean{showSolution}}
+	{\includeversion{solution}\excludeversion{problem}}
+	{\includeversion{problem}\excludeversion{solution}}
 
-\ifthenelse{\boolean{learningGoals}}
-	{\ifthenelse{\boolean{sampleSolution}}
-		{\includeversion{learningGoal}}
-		{\excludeversion{learningGoal}}}
-	{\excludeversion{learningGoal}}
+\ifthenelse{\boolean{showLearningGoals}}
+	{\ifthenelse{\boolean{showSolution}}
+		{\includeversion{learningGoals}}
+		{\excludeversion{learningGoals}}}
+	{\excludeversion{learningGoals}}
 
 \begin{document}
 	\begin{solution}
@@ -32,12 +32,12 @@
 		\newpage
 	\end{solution}
 	
-	\begin{notSolution}
+	\begin{problem}
 		\input{CoverSheet.tex}
 	 	\setcounter{page}{0}
-	\end{notSolution}
+	\end{problem}
 	
-	\foreach \i in {Question1.tex, Question2.tex, Question3.tex, Question4.tex, Question5.tex, Question6.tex, Question7.tex, Question8.tex, Question9.tex} {
+	\foreach \i in {Task1.tex, Task2.tex, Task3.tex, Task4.tex, Task5.tex, Task6.tex, Task7.tex, Task8.tex, Task9.tex} {
 		\IfFileExists{\i}{\input{\i}}{}
 	}
 	
@@ -45,7 +45,7 @@
 		\save{\i}{\j}
 	}
 	
-	\begin{notSolution}
+	\begin{problem}
 		\newpage\null\newpage\null\newpage
-	\end{notSolution}
+	\end{problem}
 \end{document}

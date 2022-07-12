@@ -1,5 +1,3 @@
-\documentclass[12pt, a4paper, oneside]{scrartcl}
-
 \usepackage{array}
 \usepackage{version}
 \usepackage{txfonts}
@@ -19,7 +17,6 @@
 
 \newcounter{pointsTotal}\setcounter{pointsTotal}{0}
 \newcounter{questionCount}\setcounter{questionCount}{0}
-\newcounter{subquestionCount}
 \newcounter{pointsCurrentQuestion}
 \newcounter{pointsCurrentSubquestion}
 
@@ -31,12 +28,56 @@
 	\begingroup
 		\expandafter\def\csname the#1\endcsname{\number\csname c@#1\endcsname}
 		\addtocounter{#1}{-1}\refstepcounter{#1}\label{#2}
-	\endgroup}
+	\endgroup
+}
+	
+\newenvironment{learningGoals}[5]{
+    \foreach \i in {#1, #2, #3, #4, #5} {
+		\ifthenelse{\equal{\i}{}}{}{\textbf{G \i}}
+	}
+}
 
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newenvironment{question}[1]
+\newenvironment{quiz}[1]{
+    \def\temp{#1}
+    \newcounter{quizItemCount}
+    \begin{tabular}{p{30em} c c} 
+    & \textbf{True} & \textbf{False} \\ 
+}
 {
-	\setcounter{subquestionCount}{0}
+    \setcounter{pointsTotal}{\value{pointsTotal}-\value{pointsCurrentQuestion}}
+    \setcounter{pointsCurrentQuestion}{\value{quizItemCount}*\temp}
+    \setcounter{pointsTotal}{\value{pointsTotal}+\value{pointsCurrentQuestion}}
+    
+    \foreach \i/\j in {points1/1, points2/2, points3/3, points4/4, points5/5, points6/6, points7/7, points8/8, points9/9} {
+		\ifnum\value{questionCount}=\j
+			\setcounter{\i}{\value{pointsCurrentQuestion}}
+		\fi
+	}
+    
+    \end{tabular}
+}
+
+\newcommand{\quizItem}[7] {
+    \stepcounter{quizItemCount}
+    \begin{learningGoals}{#3}{#4}{#5}{#6}{#7}\end{learningGoals}
+    
+	#1  & 
+	
+	\ifthenelse{\equal{#2}{T}}{
+	    \begin{solution}\rlap{\xmark}\end{solution}$\Box$    &$\Box$    \\  
+	}{}
+	
+	\ifthenelse{\equal{#2}{F}}{
+	    $\Box$    & \begin{solution}\rlap{\xmark}\end{solution}$\Box$    \\ 
+	}{}
+	
+	& & \\
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newenvironment{question}[7]
+{
 	\setcounter{pointsCurrentQuestion}{#1}
 	\setcounter{pointsTotal}{\value{pointsTotal}+\value{pointsCurrentQuestion}}
 
@@ -59,6 +100,10 @@
 		\vspace{-0.3cm}
 	\end{flushright}
 
+	\vspace{2mm}
+	#2 \begin{learningGoals}{#3}{#4}{#5}{#6}{#7}\end{learningGoals}
+	\vspace{4mm}
+	
 	\foreach \i/\j in {points1/1, points2/2, points3/3, points4/4, points5/5, points6/6, points7/7, points8/8, points9/9} {
 		\ifnum\value{questionCount}=\j
 			\setcounter{\i}{\value{pointsCurrentQuestion}}
@@ -66,28 +111,39 @@
 	}
 }
 
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newenvironment{subquestion}[1]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newenvironment{task}[6]
+{
+    \begin{question}{0}{#1}{#2}{#3}{#4}{#5}{#6}
+        \begin{enumerate}
+}
+{
+        \end{enumerate}
+    \end{question}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newenvironment{subtask}[7]
 {  	
-	\stepcounter{subquestionCount}
 	\setcounter{pointsCurrentSubquestion}{#1}
 	\setcounter{pointsTotal}{\value{pointsTotal}+\value{pointsCurrentSubquestion}}
-
+	
+	\item #2 \begin{learningGoals}{#3}{#4}{#5}{#6}{#7}\end{learningGoals}
+	
+	\begin{flushright}
+    	\vspace{-0.7cm}
+    	\large
+    	\fbox{~~~~~~ / \thepointsCurrentSubquestion}
+    	\vspace{-0.3cm}
+	\end{flushright}
+	
+	\vspace{4mm}
+	
 	\foreach \i/\j in {points1/1, points2/2, points3/3, points4/4, points5/5, points6/6, points7/7, points8/8, points9/9} {
 		\ifnum\value{questionCount}=\j
-			\ifnum\value{subquestionCount}=1
-				\addtocounter{pointsTotal}{-\value{\i}}
-				\setcounter{\i}{0}
-			\fi
 			\addtocounter{\i}{\value{pointsCurrentSubquestion}}
 		\fi
 	}
-}
-{
-	\begin{flushright}
-	\vspace{-0.7cm}
-	\large
-	\fbox{~~~~~~ / \thepointsCurrentSubquestion}
-	\vspace{-0.3cm}
-	\end{flushright}
-}
+}{}
