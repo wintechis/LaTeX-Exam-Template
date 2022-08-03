@@ -30,6 +30,10 @@
 		\addtocounter{#1}{-1}\refstepcounter{#1}\label{#2}
 	\endgroup
 }
+
+\newcommand{\st}[1]{
+	\begin{solution}#1\end{solution}
+}
 	
 \newenvironment{learningGoals}[5]{
     \foreach \i in {#1, #2, #3, #4, #5} {
