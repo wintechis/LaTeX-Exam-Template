@@ -1,6 +1,6 @@
 \newpage
-\begin{task}{}{}{}{}{}{}
-	\begin{subtask}{6}{Complete the following sequence diagram.}{1.5}{}{}{}{}
+\begin{task}{This question is a task with two subtasks. The points of the subtasks are automatically added together to calculate the tasks points.}{}{}{}{}{}
+	\begin{subtask}{6}{This is the first subtask.}{1.5}{}{}{}{}
 		\begin{problem}
 			\begin{sequencediagram}
 				\def\unitfactor{0.9}
@@ -31,33 +31,20 @@
 		\end{solution}
 	\end{subtask}
 	
-	\begin{subtask}{2}{Map the HTTP methods (DELETE, GET, POST, PUT) with their comparable CRUD Operation in the table below by completing the entries in the table. Note that there can be more than one value within a cell.}{4.1}{}{}{}{}
-		\begin{problem}
-			\begin{center}
-				\setlength\extrarowheight{3pt}
-				\begin{tabular}{|c|c|}
-					\hline
-					\textbf{CRUD Operations} & \textbf{HTTP Methods} \\ \hline
-					Create                   &              \\ \hline
-					                     	 & GET                   \\ \hline
-					Update                   &                    \\ \hline
-					Delete                   & 		                \\ \hline
-					\end{tabular}
-			  \end{center}
-		\end{problem}
-			
+	\begin{subtask}{2}{This is the second subtask. Just as with every question or task, it is also possible to add learning goals to each subtask.}{4.1}{}{}{}{}
 		\begin{solution}
 			\textbf{Solution:}
-			\begin{center}
-				\begin{tabular}{|c|l|}
-					\hline
-					\textbf{CRUD-Operations} & \textbf{HTTP Methods} \\ \hline
-					Create                   & POST, PUT             \\ \hline
-					Read                     & GET                   \\ \hline
-					Update                   & PUT                   \\ \hline
-					Delete                   & DELETE                \\ \hline
-					\end{tabular}
-			  \end{center}
 		\end{solution}
+		\begin{center}
+		    \setlength\extrarowheight{3pt}
+			\begin{tabular}{|c|c|}
+				\hline
+				\textbf{CRUD-Operations} & \textbf{HTTP Methods} \\ \hline
+				Create                   & \st{This text}        \\ \hline
+				\st{will only be}        & GET                   \\ \hline
+				Update                   & \st{displayed in}     \\ \hline
+				Delete                   & \st{the soluton.}     \\ \hline
+			\end{tabular}
+		\end{center}
 	\end{subtask}
 \end{task}
